@@ -1,0 +1,85 @@
+/**** App.vue
+// const logout = () => authStore.isAuthenticated = false;
+// using State
+// const logout = () => authStore.$state = { isAuthenticated: false, user: {} };
+// using patch
+const logout = () => authStore.$patch((state) => {
+  (state.isAuthenticated = false), (state.user = {});
+});
+
+// const login = () => authStore.$patch((state) => {
+//   (state.isAuthenticated = true),
+//     (state.user = {
+//       name: "Khalid",
+//       email: "mohamed@gmail.com"
+//     });
+// })
+
+// to reset large data
+const login = () => authStore.$reset();
+****/
+
+/**** Counter.vue
+// const increment = () => store.count++;
+// const decrement = () => store.count--;
+****/
+
+/**** HomeView.vue
+//when destructuring the object
+const { isAuthenticated, user } = storeToRefs(authStore);
+
+<div v-if="isAuthenticated">
+    User Name is : {{ user.name }}
+</div>
+****/
+
+/**** auth.js
+
+state: () => ({
+  isAuthenticated: true,
+    user: {
+      name: "Khalid",
+      email: "mohamed@gmail.com"
+  },
+}),
+
+actions: {
+  login() {
+    this.$reset();
+  },
+  async login() {
+    const res = await fetch("https://reqres.in/api/users/2?delay=2"); //To delay 2 seconds
+    const {data} = await res.json();
+    this.user = data;
+    this.isAuthenticated = true;
+  }
+}
+
+****/
+
+/**** counter.js
+
+// Using composition API in store
+export const useCounterStore = defineStore("counter", () => {
+    const count = ref(0);
+    const countDigitLength = computed(() => {
+        count.value.toString().length;
+    });
+    function increment() {
+        if (!isAuthenticated()) return;
+        this.count++;
+    }
+    function decrement() {
+        if (!isAuthenticated()) return;
+        this.count--;
+    }
+    const isAuthenticated = () => {
+        const authStore = useAuthStore();
+        return authStore.isAuthenticated;
+    }
+
+    return {count, countDigitLength, increment, decrement}
+    
+});
+
+****/
